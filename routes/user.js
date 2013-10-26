@@ -31,6 +31,7 @@ module.exports.findByNumber = function (number, cb){
 
 module.exports.findOrCreate = function (req, res) {
   if(!req.body.phoneNumber){
+    console.log('Failed attempt to register');
     return res.send("No phone number specified");
   }
   module.exports.findByNumber(req.body.phoneNumber, function(err, user){
