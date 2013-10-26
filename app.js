@@ -98,7 +98,7 @@ function sendGCM() {
 }
 
 function sendMessage(req, res){
-  sendSMS();
+  endSMS();
   res.status(201);
   res.send(JSON.stringify({ "status": "sent"}));
 }
