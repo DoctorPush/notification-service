@@ -46,8 +46,6 @@ agent.connect(function (err) {
   console.log('apnagent [%s] gateway connected', env);
 });
 
-var apnConnection = new apn.Connection({ "gateway": "gateway.sandbox.push.apple.com" });
-
 var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '7f15e8cfeab5a5223ddb47e8d069f292');
 
 function sendSMS(req,res,next){
