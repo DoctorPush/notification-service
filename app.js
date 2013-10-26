@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -48,7 +43,7 @@ agent.connect(function (err) {
 
 var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '7f15e8cfeab5a5223ddb47e8d069f292');
 
-function sendSMS(req,res,next){
+function sendSMS(){
   twilioClient.sms.messages.create({
     to:'+491622359650',
     from:'2243243397',
@@ -70,7 +65,7 @@ function sendSMS(req,res,next){
   });
 }
 
-function sendAPN(req,res,next){
+function sendAPN(){
   agent.createMessage()
     .device("<30b5b325 80689587 b727149b 0c6b33b0 0eb835d4 0350a5df 15791398 945de832>")
     .alert('Hello Universe!')
@@ -81,7 +76,7 @@ function sendAPN(req,res,next){
 
 var sender = new gcm.Sender('AIzaSyBVnJ7JSu2NbjKytHrvW1LjtY269kzIsTM');
 
-function sendGCM(req,res,next) {
+function sendGCM() {
   // create a message with default values
   var message = new gcm.Message();
 
@@ -102,6 +97,12 @@ function sendGCM(req,res,next) {
   });
 }
 
+function sendMessage(req, res){
+  sendSMS();
+  res.status(201);
+  res.send(JSON.stringify({ "status": "sent"}));
+}
+
 // all environments
 app.set('port', process.env.PORT || 3213);
 app.set('views', path.join(__dirname, 'views'));
@@ -119,8 +120,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', sendGCM, routes.index);
 app.post('/user', user.findOrCreate);
+app.post('/message', sendMessage);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
