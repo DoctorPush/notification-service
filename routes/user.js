@@ -39,10 +39,10 @@ module.exports.findOrCreate = function (req, res) {
     }
 
     var entry;
-    if(user){
+    if(!user){
       entry = new User({
-        androidDeviceID : req.body.androidID,
-        iosDeviceID : req.body.iosDeviceID,
+        androidDeviceID : req.body.android,
+        iosDeviceID : req.body.ios,
         number : req.body.number
       });
     }else{
