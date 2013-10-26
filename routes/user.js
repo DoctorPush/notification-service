@@ -30,10 +30,10 @@ module.exports.findByNumber = function (number, cb){
 };
 
 module.exports.findOrCreate = function (req, res) {
-  if(!req.body.number){
+  if(!req.body.phoneNumber){
     return res.send("No phone number specified");
   }
-  module.exports.findByNumber(req.body.number, function(err, user){
+  module.exports.findByNumber(req.body.phoneNumber, function(err, user){
     if (err) {
       return res.send(err);
     }
@@ -41,13 +41,13 @@ module.exports.findOrCreate = function (req, res) {
     var entry;
     if(!user){
       entry = new User({
-        androidDeviceID : req.body.android,
-        iosDeviceID : req.body.ios,
-        number : req.body.number
+        androidDeviceID : req.body.androidDeviceID,
+        iosDeviceID : req.body.iosDeviceID,
+        number : req.body.phoneNumber
       });
     }else{
-      user.androidDeviceID = req.body.android || user.androidDeviceID;
-      user.iosDeviceID = req.body.ios || user.iosDeviceID;
+      user.androidDeviceID = req.body.androidDeviceID || user.androidDeviceID;
+      user.iosDeviceID = req.body.iosDeviceID || user.iosDeviceID;
       entry = user;
     }
 
