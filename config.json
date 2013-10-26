@@ -1,0 +1,6 @@
+{
+  "mongo_user" : "pushdoc_mongoadmin",
+  "mongo_pw" : "Lyfliet0",
+  "mongo_port" : "20730",
+  "mongo_db" : "admin"
+}
