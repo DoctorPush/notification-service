@@ -9,8 +9,6 @@ Parameters:
 
 phoneNumber : phone number of the client
 
-doctorsName : Name of the doctor
+message : message 
 
-time : the updated time
-
-personsWaiting : number of persons waiting in front of the client
+serviceURL : the server where further information can be retrieved
