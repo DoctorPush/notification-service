@@ -46,7 +46,9 @@ function sendAPN(iosDeviceID, message, serviceURL){
     .alert(message)
     .set('serviceURL', serviceURL)
     .send();
-  console.log('Sent iOS notification');
+  console.log('Sent iOS notification to ' + iosDeviceID);
+  console.log('Message text:' + message);
+  console.log('ServiceURL:' + serviceURL);
 }
 
 /*
@@ -112,7 +114,7 @@ function sendMessage(req, res){
     }
 
     if(!user){
-      return sendSMS(user.phoneNumber, message);
+      return sendSMS(phoneNumber, message);
     }
 
     if(user.androidDeviceID){
