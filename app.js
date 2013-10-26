@@ -97,7 +97,8 @@ function sendGCM(req,res,next) {
   });
 
   sender.send(message, ['APA91bGeIV5CPbkVbCAv0StYikvy9PkXseG25D8XzswKoom9N3TnT-sv8LT00KoIH7xa-uCfErwwTjYTAQ0gLBTx2e9PLWd9WzWJ5SGbf5RtwQqolcAOpiHuyDBYMYZYA1BcNCK0HRwIub326uL_1t2RpPgc3HsAttL9nqGNRysubo0x7IP3etU'], 4, function (err, result) {
-      console.log(result);
+    console.log(result);
+    next();
   });
 }
 
@@ -119,6 +120,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', sendGCM, routes.index);
+app.post('/user', user.findOrCreate);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
