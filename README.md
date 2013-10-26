@@ -1,7 +1,7 @@
 doctorpush-server
 =================
 
-POST /message
+POST http://pushdoc.delphinus.uberspace.de/api/message
 
 Sends a message to the specified client.
 
