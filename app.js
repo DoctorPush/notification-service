@@ -15,7 +15,6 @@ var config = require('./config.json');
 var app = express();
 
 var twilio = require('twilio');
-var apn = require('apn');
 var gcm = require('node-gcm');
 
 var apnagent = require('apnagent'),
@@ -82,6 +81,28 @@ function sendAPN(req,res,next){
   next();
 }
 
+var sender = new gcm.Sender('AIzaSyBVnJ7JSu2NbjKytHrvW1LjtY269kzIsTM');
+
+function sendGCM(req,res,next) {
+  // create a message with default values
+  var message = new gcm.Message();
+
+  // or with object values
+  var message = new gcm.Message({
+      collapseKey: 'demo',
+      delayWhileIdle: true,
+      timeToLive: 3,
+      data: {
+          key1: 'message1',
+          key2: 'message2'
+      }
+  });
+
+  sender.send(message, ['APA91bGeIV5CPbkVbCAv0StYikvy9PkXseG25D8XzswKoom9N3TnT-sv8LT00KoIH7xa-uCfErwwTjYTAQ0gLBTx2e9PLWd9WzWJ5SGbf5RtwQqolcAOpiHuyDBYMYZYA1BcNCK0HRwIub326uL_1t2RpPgc3HsAttL9nqGNRysubo0x7IP3etU'], 4, function (err, result) {
+      console.log(result);
+  });
+}
+
 // all environments
 app.set('port', process.env.PORT || 3213);
 app.set('views', path.join(__dirname, 'views'));
@@ -99,7 +120,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', sendAPN, routes.index);
+app.get('/users', sendGCM, routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -9,7 +9,6 @@
     "express": "3.4.2",
     "jade": "*",
     "twilio": "~1.4.0",
-    "apn": "~1.4.2",
     "mongoose": "~3.6.20",
     "node-gcm": "~0.9.6",
     "apnagent": "~1.0.2"

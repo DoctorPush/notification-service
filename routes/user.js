@@ -11,10 +11,20 @@ var userSchema = new Schema({
 
 var User = mongoose.model('User', userSchema);
 
-/*
- * GET users listing.
- */
+module.exports.findById = function(id, cb){
+  return User.findById(id, function (err, user) {
+    if (!err) {
+      return cb(null, user);
+    }
+    return cb(err);
+  });
+};
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+module.exports.findNumber = function(number, cb){
+  return User.findOne({number: number}, function (err, user) {
+    if (!err) {
+      return cb(null, user);
+    }
+    return cb(err);
+  });
 };
