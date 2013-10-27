@@ -10,6 +10,7 @@ var gcm = require('node-gcm');
 var apnagent = require('apnagent'),
     agent = new apnagent.Agent();
 var request = require('request');
+var moment = require('moment');
 
 var app = express();
 
@@ -63,8 +64,8 @@ function sendSMS(phoneNumber, message, serviceURL){
   request(serviceURL, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       var data = JSON.parse(body);
-      var start = new Date(data.start);
-      toSend = message + " Now at " + start.toString('hh:mm');
+      var start = moment(data.start).fromNow();
+      toSend = message + " Now at " + start;
     }
     twilioClient.sms.messages.create({
       to: phoneNumber,
