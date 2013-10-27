@@ -64,7 +64,7 @@ function sendSMS(phoneNumber, message, serviceURL){
     if (!error && response.statusCode === 200) {
       var data = JSON.parse(body);
       var start = new Date(data.start);
-      toSend = message + " Now at " + (start.getHours() - 1) + ":" + start.getMinutes();
+      toSend = message + " Now at " + (start.getHours() - 1).toPrecision(2) + ":" + start.getMinutes().toPrecision(2);
     }
     twilioClient.sms.messages.create({
       to: phoneNumber,
