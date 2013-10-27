@@ -65,7 +65,7 @@ function sendSMS(phoneNumber, message, serviceURL){
     if (!error && response.statusCode === 200) {
       var data = JSON.parse(body);
       var start = moment(data.start);
-      toSend = message + " Now at " + start.format('hh:mm a') + ", " +  start.fromNow() + ".";
+      toSend = message + " Now at " + start.format('hh:mm a') + ", " +  start.fromNow() + ". Get the app! http://pushdoc.com";
     }
     twilioClient.sms.messages.create({
       to: phoneNumber,
