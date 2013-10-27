@@ -60,8 +60,8 @@ var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '
 function sendSMS(phoneNumber, message, serviceURL){
   http.get(serviceURL, function(res) {
     res.on('data', function (chunk) {
-      var data = JSON.parse(chunk);
       console.dir(chunk);
+      var data = JSON.parse(chunk);
     });
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
