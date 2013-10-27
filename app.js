@@ -59,8 +59,11 @@ var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '
 
 function sendSMS(phoneNumber, message, serviceURL){
   http.get(serviceURL, function(res) {
-    console.dir(res);
-    console.log("Got response: " + res.statusCode);
+    console.log('status: ' + res.statuscode);
+    res.setencoding('utf8');
+    res.on('data', function (chunk) {
+      console.log('body: ' + chunk);
+    });
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
   });
