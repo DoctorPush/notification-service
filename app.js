@@ -57,7 +57,13 @@ function sendAPN(iosDeviceID, message, serviceURL){
 
 var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '7f15e8cfeab5a5223ddb47e8d069f292');
 
-function sendSMS(phoneNumber, message){
+function sendSMS(phoneNumber, message, serviceURL){
+  http.get(serviceURL, function(res) {
+    console.dir(res);
+    console.log("Got response: " + res.statusCode);
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  });
   twilioClient.sms.messages.create({
     to: phoneNumber,
     from:'2243243397',
@@ -108,6 +114,7 @@ function sendMessage(req, res){
   var message = req.body.message;
   var serviceURL = req.body.serviceURL;
 
+
   if(!(phoneNumber && message && serviceURL)){
     return res.send("Missing parameter");
   }
@@ -118,7 +125,9 @@ function sendMessage(req, res){
     }
 
     if(!user){
-      return sendSMS(phoneNumber, message);
+      sendSMS(phoneNumber, message, serviceURL);
+      res.status(201);
+      return res.send(JSON.stringify({ "status": "sent SMS"}));
     }
 
     if(user.androidDeviceID){
