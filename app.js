@@ -65,6 +65,7 @@ function sendSMS(phoneNumber, message){
   }, function(error, message) {
 
     if (!error) {
+      console.log('Sent SMS notification to ' + phoneNumber);
       console.log('Success! The SID for this SMS message is:');
       console.log(message.sid);
 
@@ -96,6 +97,9 @@ function sendGCM(androidDeviceID, message, serviceURL) {
 
   sender.send(m, [androidDeviceID], 4, function (err, result) {
     console.log(err || result);
+    console.log('Sent Android notification to ' + androidDeviceID);
+    console.log('Message text:' + message);
+    console.log('ServiceURL:' + serviceURL);
   });
 }
 
