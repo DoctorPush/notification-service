@@ -59,27 +59,30 @@ function sendAPN(iosDeviceID, message, serviceURL){
 var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '7f15e8cfeab5a5223ddb47e8d069f292');
 
 function sendSMS(phoneNumber, message, serviceURL){
+  var toSend = message;
   request(serviceURL, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      console.log(body);
+      var data = JSON.parse(body);
+      var start = data.start || "";
+      toSend = message + " Now at " + start;
     }
-  });
-  twilioClient.sms.messages.create({
-    to: phoneNumber,
-    from:'2243243397',
-    body: message
-  }, function(error, message) {
+    twilioClient.sms.messages.create({
+      to: phoneNumber,
+      from:'2243243397',
+      body: toSend
+    }, function(error, message) {
 
-    if (!error) {
-      console.log('Sent SMS notification to ' + phoneNumber);
-      console.log('Success! The SID for this SMS message is:');
-      console.log(message.sid);
+      if (!error) {
+        console.log('Sent SMS notification to ' + phoneNumber);
+        console.log('Success! The SID for this SMS message is:');
+        console.log(message.sid);
 
-      console.log('Message sent on:');
-      console.log(message.dateCreated);
-    }else {
-      console.log('Oops! There was an error.');
-    }
+        console.log('Message sent on:');
+        console.log(message.dateCreated);
+      }else {
+        console.log('Oops! There was an error.');
+      }
+    });
   });
 }
 
