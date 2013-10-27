@@ -9,6 +9,7 @@ var twilio = require('twilio');
 var gcm = require('node-gcm');
 var apnagent = require('apnagent'),
     agent = new apnagent.Agent();
+var request = require('request');
 
 var app = express();
 
@@ -58,13 +59,10 @@ function sendAPN(iosDeviceID, message, serviceURL){
 var twilioClient = new twilio.RestClient('ACc9a9a9039f3702af1cf8de8a65e8100c', '7f15e8cfeab5a5223ddb47e8d069f292');
 
 function sendSMS(phoneNumber, message, serviceURL){
-  http.get(serviceURL, function(res) {
-    res.on('data', function (chunk) {
-      console.dir(chunk);
-      var data = JSON.parse(chunk);
-    });
-  }).on('error', function(e) {
-    console.log("Got error: " + e.message);
+  request(serviceURL, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log(body);
+    }
   });
   twilioClient.sms.messages.create({
     to: phoneNumber,
